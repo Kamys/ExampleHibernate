@@ -54,4 +54,13 @@ public class Client {
     public void setBalance(int balance) {
         this.balance = balance;
     }
+
+    //TODO: Add test.
+    public void withdraw(int amount) {
+        balance-=amount;
+    }
+
+    public void addProduction(Production production) {
+        boughtProductions.add(production);
+    }
 }

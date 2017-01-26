@@ -13,6 +13,7 @@ public class Production {
      * Production name.
      */
     private String name;
+    private int cost;
 
     /**
      * Only for hibernate usage.
@@ -21,9 +22,18 @@ public class Production {
     protected Production() {
     }
 
-    public Production(int id, String name) {
+    public Production(int id, String name, int cost) {
         this.id = id;
         this.name = name;
+        this.cost = cost;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public int getId() {
