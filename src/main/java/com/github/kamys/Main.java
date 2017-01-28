@@ -19,14 +19,14 @@ import java.util.HashMap;
  */
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class);
-    private static final Client steve = new Client("Steve", 300);
+    private static final Client steve = new Client("Alex", 500);
 
     public static void main(String[] args) {
-        SessionFactory factory = createSessionFactory();
         Transaction tr = null;
-        try (
+        try(
+                SessionFactory factory = createSessionFactory();
                 Session session = factory.openSession()
-        ) {
+        ){
             tr = session.beginTransaction();
             Serializable save = session.save(steve);
             LOGGER.debug("Serializable = " + save);
@@ -35,7 +35,6 @@ public class Main {
             if (tr != null) tr.rollback();
             LOGGER.warn(e);
         }
-
     }
 
     private static SessionFactory createSessionFactory() {
