@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM
+        "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration>
+
+    <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss.SSS} [%-5p][%-6.6t][%-20.20c{1}] - %m %n"/>
+        </layout>
+    </appender>
+
+    <appender name="main" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="log/main.log"/>
+        <param name="MaxFileSize" value="100MB"/>
+        <param name="MaxBackupIndex" value="10"/>
+        <param name="Encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss.SSS} [%-5p][%-6.6t][%-20.20c{1}] - %m %n"/>
+        </layout>
+    </appender>
+
+    <logger name="com.github.kamys">
+        <level value="DEBUG"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <root>
+        <priority value="DEBUG"/>
+        <appender-ref ref="main"/>
+    </root>
+
+</log4j:configuration>
