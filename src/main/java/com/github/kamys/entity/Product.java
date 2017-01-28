@@ -3,14 +3,14 @@ package com.github.kamys.entity;
 /**
  * Represents the production which to buys {@link Client}.
  */
-public class Production {
+public class Product {
     /**
      * Unique id for production;
      */
     private int id;
 
     /**
-     * Production name.
+     * Product name.
      */
     private String name;
     private int cost;
@@ -19,10 +19,10 @@ public class Production {
      * Only for hibernate usage.
      */
 
-    protected Production() {
+    protected Product() {
     }
 
-    public Production(int id, String name, int cost) {
+    public Product(int id, String name, int cost) {
         this.id = id;
         this.name = name;
         this.cost = cost;

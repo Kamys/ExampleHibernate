@@ -1,10 +1,11 @@
 package com.github.kamys.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents client which to buys {@link Production} of {@link Store}.
- * Contains list to bought{@link Production}.
+ * Represents client which to buys {@link Product} of {@link Store}.
+ * Contains list to bought{@link Product}.
  */
 public class Client {
     /**
@@ -12,13 +13,13 @@ public class Client {
      */
     private String name;
     /**
-     * Client balance for to buy {@link Production}.
+     * Client balance for to buy {@link Product}.
      */
     private int balance;
     /**
-     * List to bought{@link Production}
+     * List to bought{@link Product}
      */
-    private List<Production> boughtProductions;
+    private List<Product> boughtProducts = new ArrayList<>();
 
     /**
      * Only for hibernate usage.
@@ -31,12 +32,12 @@ public class Client {
         this.balance = balance;
     }
 
-    public List<Production> getBoughtProductions() {
-        return boughtProductions;
+    public List<Product> getBoughtProducts() {
+        return boughtProducts;
     }
 
-    public void setBoughtProductions(List<Production> boughtProductions) {
-        this.boughtProductions = boughtProductions;
+    public void setBoughtProducts(List<Product> boughtProducts) {
+        this.boughtProducts = boughtProducts;
     }
 
     public String getName() {
@@ -63,7 +64,16 @@ public class Client {
         balance+=amount;
     }
 
-    public void addProduction(Production production) {
-        boughtProductions.add(production);
+    public void addProduction(Product product) {
+        boughtProducts.add(product);
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "name='" + name + '\'' +
+                ", balance=" + balance +
+                ", boughtProducts=" + boughtProducts +
+                '}';
     }
 }

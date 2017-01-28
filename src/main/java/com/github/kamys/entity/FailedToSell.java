@@ -3,7 +3,7 @@ package com.github.kamys.entity;
 /**
  * This exception is used when failed to sell the production.
  */
-public class FailedToSell extends Exception {
+public class FailedToSell extends RuntimeException {
     public FailedToSell() {
     }
 
