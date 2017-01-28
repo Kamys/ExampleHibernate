@@ -6,17 +6,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StoreTest {
 
-    private final List<Production> productions = new ArrayList<Production>();
+    private final Map<Integer, Production> productions = new HashMap<>();
     private final int idProduction = 0;
     private Store store;
     @Mock
@@ -24,18 +22,21 @@ public class StoreTest {
 
     @Before
     public void setUp() throws Exception {
-        productions.add(createProduction(0, "Bread", 50));
-        productions.add(createProduction(1, "Cheese", 60));
-        productions.add(createProduction(2, "Meat", 120));
+        addProduction(0, "Bread", 50);
+        addProduction(1, "Cheese", 60);
+        addProduction(2, "Meat", 120);
         store = new Store("Store 1", productions);
         when(client.getBalance()).thenReturn(100);
     }
 
-    private Production createProduction(int id, String bread, int cost) {
+    private void addProduction(int id, String name, int cost) {
+        Production production = createProduction(id, name, cost);
+        productions.put(id, production);
+    }
+
+    private Production createProduction(int id, String name, int cost) {
         Production mock = mock(Production.class);
-        mock.setId(id);
-        mock.setName(bread);
-        mock.setCost(cost);
+        when(mock.getCost()).thenReturn(cost);
         return mock;
     }
 

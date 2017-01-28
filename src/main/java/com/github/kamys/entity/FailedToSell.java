@@ -1,10 +1,9 @@
 package com.github.kamys.entity;
 
 /**
- * Created by HNKNTOC on 26.01.2017.
- * TODO: Add doc.
+ * This exception is used when failed to sell the production.
  */
-public class FailedToSell extends Throwable {
+public class FailedToSell extends Exception {
     public FailedToSell() {
     }
 

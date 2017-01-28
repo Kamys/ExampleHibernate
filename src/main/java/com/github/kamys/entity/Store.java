@@ -1,8 +1,6 @@
 package com.github.kamys.entity;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +15,7 @@ public class Store {
      * List production which to trades store.
      * Key - id Value - Production
      */
-    private Map<Integer,Production> productions;
+    private Map<Integer, Production> productions;
 
     /**
      * Only for hibernate usage.
@@ -31,7 +29,7 @@ public class Store {
      * @param name store name.
      */
     public Store(String name) {
-        this(name, Collections.<Integer,Production>emptyMap());
+        this(name, Collections.emptyMap());
     }
 
     /**
@@ -40,7 +38,7 @@ public class Store {
      * @param name        store name.
      * @param productions list production which to trades store.
      */
-    public Store(String name, Map<Integer,Production> productions) {
+    public Store(String name, Map<Integer, Production> productions) {
         this.name = name;
         this.productions = productions;
     }
@@ -55,9 +53,22 @@ public class Store {
      */
     public void toSell(int id, Client client) throws FailedToSell {
         Production production = productions.get(id);
-        if(production == null){
+        checkProduction(production);
+        checkClient(client, production);
+
+        client.withdraw(production.getCost());
+        client.addProduction(production);
+    }
+
+    private void checkProduction(Production production) throws FailedToSell {
+        if (production == null)
             throw new FailedToSell("Production missing.");
-        }
+    }
+
+    private void checkClient(Client client, Production production) throws FailedToSell {
+        int balance = client.getBalance();
+        if (balance < production.getCost())
+            throw new FailedToSell("On the client's balance not enough money.");
     }
 
     public String getName() {
