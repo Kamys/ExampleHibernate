@@ -12,7 +12,8 @@ import java.util.HashMap;
 public class Main {
     public static void main(String[] args) {
         HashMap<Integer, Product> products = new HashMap<>();
-        products.put(1,new Product(1,"X1",300));
+        Product car = new Product(1, "Car", 300);
+        products.put(1, car);
 
         Store store = new Store("Store 1", products);
         Client steve = new Client("Steve", 300);
