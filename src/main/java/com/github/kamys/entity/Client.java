@@ -55,9 +55,12 @@ public class Client {
         this.balance = balance;
     }
 
-    //TODO: Add test.
     public void withdraw(int amount) {
         balance-=amount;
+    }
+
+    public void deposit(int amount){
+        balance+=amount;
     }
 
     public void addProduction(Production production) {
