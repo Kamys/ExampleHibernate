@@ -15,18 +15,20 @@ public class Client {
      * Client name.
      */
     @Id
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     /**
      * Client balance for to buy {@link Product}.
      */
-    @Column(name = "balance")
+    @Column(name = "balance", nullable = false)
     private int balance;
     /**
      * List to bought{@link Product}
      */
-    @Transient
-    private List<Product> boughtProducts = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name="products", joinColumns=@JoinColumn(name="id"))
+    @Column(name="bought_products")
+    private List<Product> products = new ArrayList<>();
 
     /**
      * Only for hibernate usage.
@@ -39,12 +41,12 @@ public class Client {
         this.balance = balance;
     }
 
-    public List<Product> getBoughtProducts() {
-        return boughtProducts;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setBoughtProducts(List<Product> boughtProducts) {
-        this.boughtProducts = boughtProducts;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public String getName() {
@@ -64,15 +66,15 @@ public class Client {
     }
 
     public void withdraw(int amount) {
-        balance-=amount;
+        balance -= amount;
     }
 
-    public void deposit(int amount){
-        balance+=amount;
+    public void deposit(int amount) {
+        balance += amount;
     }
 
     public void addProduction(Product product) {
-        boughtProducts.add(product);
+        products.add(product);
     }
 
     @Override
@@ -80,7 +82,7 @@ public class Client {
         return "Client{" +
                 "name='" + name + '\'' +
                 ", balance=" + balance +
-                ", boughtProducts=" + boughtProducts +
+                ", products=" + products +
                 '}';
     }
 }

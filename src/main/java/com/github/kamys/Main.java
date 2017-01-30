@@ -19,27 +19,35 @@ import java.util.HashMap;
  */
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class);
-    private static final Client steve = new Client("Alex", 500);
 
     public static void main(String[] args) {
+        final Client client = new Client("Nikita", 100);
+        client.addProduction(new Product(0,"Bread",20));
+        saveClient(client);
+    }
+
+    private static void saveClient(Client client) {
         Transaction tr = null;
-        try(
-                SessionFactory factory = createSessionFactory();
-                Session session = factory.openSession()
-        ){
+        SessionFactory factory = createSessionFactory();
+        Session session = factory.openSession();
+        try{
             tr = session.beginTransaction();
-            Serializable save = session.save(steve);
+            Serializable save = session.save(client);
             LOGGER.debug("Serializable = " + save);
             tr.commit();
         } catch (HibernateException e) {
             if (tr != null) tr.rollback();
             LOGGER.warn(e);
+        }finally {
+            session.close();
+            factory.close();
         }
     }
 
     private static SessionFactory createSessionFactory() {
         Configuration configuration = new Configuration()
                 .addAnnotatedClass(Client.class)
+                .addAnnotatedClass(Product.class)
                 .configure();
 
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
@@ -48,13 +56,13 @@ public class Main {
         return configuration.buildSessionFactory(builder.build());
     }
 
-    private static void toSellCarSteve() {
+    private static void toSellCarSteve(Client client) {
         HashMap<Integer, Product> products = new HashMap<>();
         Product car = new Product(1, "Car", 300);
         products.put(1, car);
 
         Store store = new Store("Store 1", products);
 
-        store.toSell(1, steve);
+        store.toSell(1, client);
     }
 }
