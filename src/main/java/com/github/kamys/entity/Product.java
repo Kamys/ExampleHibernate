@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(schema = "public", name = "products")
 public class Product {
     /**
-     * Unique id for production;
+     * Unique id for production.
      */
     @Id
     @Column(name = "id", nullable = false)

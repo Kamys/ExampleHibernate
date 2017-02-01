@@ -21,12 +21,12 @@ public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        final Client client = new Client("Nikita", 100);
+        final Client client = new Client(0,"Nikita", 100);
         client.addProduction(new Product(0,"Bread",20));
-        saveClient(client);
+        saveClient((new Product(4,"Home",2000)));
     }
 
-    private static void saveClient(Client client) {
+    private static void saveClient(Object client) {
         Transaction tr = null;
         SessionFactory factory = createSessionFactory();
         Session session = factory.openSession();

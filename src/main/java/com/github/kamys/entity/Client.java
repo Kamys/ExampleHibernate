@@ -11,10 +11,17 @@ import java.util.List;
 @Entity
 @Table(schema = "public", name = "clients")
 public class Client {
+
+    /**
+     * Unique id for client.
+     */
+    @Id
+    @Column(name = "id", nullable = false)
+    private int id;
     /**
      * Client name.
      */
-    @Id
+
     @Column(name = "name", nullable = false)
     private String name;
     /**
@@ -25,20 +32,29 @@ public class Client {
     /**
      * List to bought{@link Product}
      */
-    @ElementCollection
-    @CollectionTable(name="products", joinColumns=@JoinColumn(name="id"))
-    @Column(name="bought_products")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "purchased_product",
+            joinColumns = @JoinColumn(name = "id_client"),
+            inverseJoinColumns = @JoinColumn(name = "id_product"))
     private List<Product> products = new ArrayList<>();
-
     /**
      * Only for hibernate usage.
      */
     protected Client() {
     }
-
-    public Client(String name, int balance) {
+    public Client(int id, String name, int balance) {
+        this.id = id;
         this.name = name;
         this.balance = balance;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Product> getProducts() {
@@ -80,7 +96,8 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", balance=" + balance +
                 ", products=" + products +
                 '}';

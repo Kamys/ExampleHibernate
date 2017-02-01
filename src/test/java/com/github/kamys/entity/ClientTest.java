@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(DataProviderRunner.class)
 public class ClientTest {
 
-    private final Client client = new Client("Client 1", 100);
+    private final Client client = new Client(1,"Client 1", 100);
 
     @DataProvider
     public static Object[][] dataForWithdraw(){
