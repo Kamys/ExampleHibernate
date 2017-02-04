@@ -21,40 +21,13 @@ public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        final Client client = new Client(0,"Nikita", 100);
-        client.addProduction(new Product(0,"Bread",20));
-        saveClient((new Product(4,"Home",2000)));
+        DataBaseHelper helper = new DataBaseHelper();
+        final Client client = new Client(1,"Vasa", 300);
+        client.addProduction(new Product(1,"Car",100));
+        client.addProduction(new Product(2,"Milk",70));
+        helper.saveClient(client);
     }
 
-    private static void saveClient(Object client) {
-        Transaction tr = null;
-        SessionFactory factory = createSessionFactory();
-        Session session = factory.openSession();
-        try{
-            tr = session.beginTransaction();
-            Serializable save = session.save(client);
-            LOGGER.debug("Serializable = " + save);
-            tr.commit();
-        } catch (HibernateException e) {
-            if (tr != null) tr.rollback();
-            LOGGER.warn(e);
-        }finally {
-            session.close();
-            factory.close();
-        }
-    }
-
-    private static SessionFactory createSessionFactory() {
-        Configuration configuration = new Configuration()
-                .addAnnotatedClass(Client.class)
-                .addAnnotatedClass(Product.class)
-                .configure();
-
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties());
-
-        return configuration.buildSessionFactory(builder.build());
-    }
 
     private static void toSellCarSteve(Client client) {
         HashMap<Integer, Product> products = new HashMap<>();
